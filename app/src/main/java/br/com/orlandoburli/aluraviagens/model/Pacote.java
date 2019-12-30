@@ -1,8 +1,11 @@
 package br.com.orlandoburli.aluraviagens.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Pacote {
+public class Pacote implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String local;
     private final String imagem;

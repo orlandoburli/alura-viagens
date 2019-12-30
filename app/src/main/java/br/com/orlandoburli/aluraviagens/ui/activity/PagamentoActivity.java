@@ -1,6 +1,9 @@
 package br.com.orlandoburli.aluraviagens.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +26,29 @@ public class PagamentoActivity extends AppCompatActivity {
         setTitle ( TITLE_APP_BAR );
 
         fillData ();
+
     }
 
     private void fillData() {
-        Pacote pacote = new Pacote ( "São Paulo - SP", "sao_paulo_sp", 2, new BigDecimal ( 243.99 ) );
+        Intent intent = getIntent ();
 
-        mostraPreco ( pacote );
+        if (intent.hasExtra ( "pacote" )) {
+
+            final Pacote pacote = (Pacote) intent.getSerializableExtra ( "pacote" );
+
+            mostraPreco ( pacote );
+
+            final Button botaoFinalizaCompra = findViewById ( R.id.pagamento_botao_finaliza_compra );
+
+            botaoFinalizaCompra.setOnClickListener ( new View.OnClickListener () {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent ( PagamentoActivity.this, ResumoCompraActivity.class );
+                    intent.putExtra ( "pacote", pacote );
+                    startActivity ( intent );
+                }
+            } );
+        }
     }
 
     private void mostraPreco(Pacote pacote) {
